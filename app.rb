@@ -11,11 +11,20 @@ def init_db
 end
 
 before do
+	# инициализация БД
+
 	init_db
 end
 
+# configure вызывается каждый раз при конфигурации при инициализации приложения:
+# когда изменился код программы или перезагрузилась страница
+
 configure do
+	# инициализации БД
+
 	init_db
+	# создает таблицу, если таблица не существует
+
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts ( id INTEGER PRIMARY KEY AUTOINCREMENT, created_date DATE, content TEXT)'	
 end
 
@@ -30,6 +39,7 @@ get '/new' do
 end
 
 post '/new' do
+  # получаем переменную из post-запроса
   content = params[:content]
 
   erb "You typed #{content}"
